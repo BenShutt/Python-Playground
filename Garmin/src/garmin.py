@@ -9,8 +9,8 @@ import os
 import datetime
 import argparse
 
-from activity_type import Activity_Type
-from activity import Activity
+from garmin_api import init_api
+from activity_type import ActivityType
 from run import Run
 from ride import Ride
 from swim import Swim
@@ -28,12 +28,12 @@ def parse_arguments():
     parser = argparse.ArgumentParser(file_name)
     parser.add_argument("-u", "--username", help="Your Garmin Connect username", type=str, required=True)
     parser.add_argument("-p", "--password", help="Your Garmin Connect password", type=str, required=True)
+    parser.add_argument("-t", "--tokens", help="Directory to write OAuth tokens", type=str, required=True)
     return parser.parse_args()
 
 def fetch_activities(args):
     # Log in to the Garmin Connect API
-    api = Garmin(args.username, args.password)
-    api.login()
+    api = init_api(args)
 
     # Get the date to fetch activities since
     end_date = datetime.datetime.now()
@@ -43,12 +43,12 @@ def fetch_activities(args):
     return api.get_activities_by_date(start_date.isoformat(), end_date.isoformat())
 
 def init_activity(activity):
-    activity_type = Activity_Type.init(activity)
-    if activity_type == Activity_Type.RUN:
+    activity_type = ActivityType.init(activity)
+    if activity_type == ActivityType.RUN:
         return Run(activity)
-    elif activity_type == Activity_Type.RIDE:
+    elif activity_type == ActivityType.RIDE:
         return Ride(activity)
-    elif activity_type == Activity_Type.SWIM:
+    elif activity_type == ActivityType.SWIM:
         return Swim(activity)
 
 # ==================== Main ====================

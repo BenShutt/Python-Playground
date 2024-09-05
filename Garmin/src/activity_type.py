@@ -2,7 +2,7 @@
 
 from enum import Enum 
 
-class Activity_Type(Enum):
+class ActivityType(Enum):
     RUN = 0
     RIDE = 1
     SWIM = 2

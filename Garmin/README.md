@@ -26,10 +26,10 @@ pip3 install -r ./requirements.txt
 
 ### Run
 
-Run Python script passing your Garmin Connect username and password as a command-line argument:
+In an active virtual environment, run the python script passing your Garmin Connect username and password as command-line arguments:
 
 ```bash
-python ./src/garmin.py --username email@domain.com --password password
+python ./src/garmin.py --username email@domain.com --password password --tokens ./garmin-tokens
 ```
 
 ### Deactivate Virtual Environment
