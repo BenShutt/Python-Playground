@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Convert #RRGGBB(AA) hex color strings to RGBA format.
 Usage: python hex-color.py "#RRGGBBAA"

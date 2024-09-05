@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Binary search, also known as logarithmic search, is a search algorithm that finds the 
 position of a target value within a sorted array.

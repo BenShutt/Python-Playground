@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Example plotting a pie chart with Matplotlib and NumPy
 """
