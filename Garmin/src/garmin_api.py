@@ -11,15 +11,15 @@ def get_mfa():
     return input("MFA one-time code: ")
 
 def init_api(args):
+    token_store = args.tokens
     try:
-        token_store = args.tokens
         garmin = Garmin()
         garmin.login(token_store)
         return garmin
     except (FileNotFoundError, GarthHTTPError, GarminConnectAuthenticationError):
-        print("Oauth tokens not found, logging in...")
+        print("OAuth tokens not found, logging in...")
         garmin = Garmin(email=args.username, password=args.password, is_cn=False, prompt_mfa=get_mfa)
         garmin.login()
         garmin.garth.dump(token_store)
-        print(f"Oauth tokens stored in '{token_store}' directory for future use")
+        print(f"OAuth tokens stored in '{token_store}' directory for future use")
         return garmin
