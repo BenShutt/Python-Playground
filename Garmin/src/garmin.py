@@ -6,48 +6,57 @@ Fetch and log Garmin activities.
 
 import sys
 import os
-import argparse
 import datetime
+import argparse
+
+from activity_type import Activity_Type
+from activity import Activity
+from run import Run
+from ride import Ride
+from swim import Swim
 
 from garminconnect import Garmin
 
-# Number of since now to fetch activities
-DAYS_AGO = 3
+# Number of days before now to fetch activities
+ACTIVITIES_IN_LAST_DAYS = 3
 
-# GMT date format of the Garmin models
-GARMIN_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
+# ==================== Functions ====================
 
-# Date format to print
-DATE_FORMAT = "%A %d of %m %Y"
+def parse_arguments():
+    # Require username and password for authentication as command-line arguments.
+    file_name = os.path.basename(sys.argv[0])
+    parser = argparse.ArgumentParser(file_name)
+    parser.add_argument("-u", "--username", help="Your Garmin Connect username", type=str, required=True)
+    parser.add_argument("-p", "--password", help="Your Garmin Connect password", type=str, required=True)
+    return parser.parse_args()
 
-# Map a Garmin date format to a date format to print
-def formatted_date_time(date_time_string):
-    instant = datetime.datetime.strptime(date_time_string, GARMIN_DATE_FORMAT)
-    return instant.strftime(DATE_FORMAT)
+def fetch_activities(args):
+    # Log in to the Garmin Connect API
+    api = Garmin(args.username, args.password)
+    api.login()
 
-# User must provide a username and password for authentication as
-# command-line arguments.
-file_name = os.path.basename(sys.argv[0])
-parser = argparse.ArgumentParser(file_name)
-parser.add_argument("-u", "--username", help="Your Garmin Connect username", type=str, required=True)
-parser.add_argument("-p", "--password", help="Your Garmin Connect password", type=str, required=True)
-args = parser.parse_args()
+    # Get the date to fetch activities since
+    end_date = datetime.datetime.now()
+    start_date = end_date - datetime.timedelta(ACTIVITIES_IN_LAST_DAYS)
 
-# Log in to the Garmin Connect API
-api = Garmin(args.username, args.password)
-api.login()
+    # Fetch activities
+    return api.get_activities_by_date(start_date.isoformat(), end_date.isoformat())
 
-# Get the date to fetch activities since
-end_date = datetime.datetime.now()
-start_date = end_date - datetime.timedelta(DAYS_AGO)
+def init_activity(activity):
+    activity_type = Activity_Type.init(activity)
+    if activity_type == Activity_Type.RUN:
+        return Run(activity)
+    elif activity_type == Activity_Type.RIDE:
+        return Ride(activity)
+    elif activity_type == Activity_Type.SWIM:
+        return Swim(activity)
 
-# Fetch activities
-activities = api.get_activities_by_date(start_date.isoformat(), end_date.isoformat())
+# ==================== Main ====================
 
-# Download activities
-for activity in activities:
-    activity_id = activity["activityId"]
-    activity_name = activity["activityName"]
-    activity_type = activity["activityType"]["typeKey"]
-    activity_date = formatted_date_time(activity["startTimeGMT"])
-    print(f"activity_id={activity_id}, activity_name={activity_name}, activity_type={activity_type}, activity_date={activity_date}")
+if __name__ == "__main__":
+    args = parse_arguments()
+    activities = fetch_activities(args)
+    for activity in activities:
+        model = init_activity(activity)
+        if model != None:
+            print(model.description())
