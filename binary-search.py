@@ -51,9 +51,7 @@ def test_binary_search(array, value, expected_index):
     else:
         print(f"Failure, returned {index} but expected {expected_index}")
 
-# ==================== Main ====================
-
-if __name__ == "__main__":
+def test_all():
     # Integers, None, empty, or one
     test_binary_search(None, None, None)
     test_binary_search(None, 0, None)
@@ -96,3 +94,8 @@ if __name__ == "__main__":
     test_binary_search([1, 5, 9, 12, 17], 13, None)
     test_binary_search([1, 5, 9, 12, 17], 16, None)
     test_binary_search([1, 5, 9, 12, 17], 18, None)
+
+# ==================== Main ====================
+
+if __name__ == "__main__":
+    test_all()
