@@ -2,10 +2,24 @@
 
 Fetch and log Garmin activities.
 
+## Installation
+
+```bash
+pip3 install -r requirements.txt
+```
+
 ## Usage
 
+Open the virtual machine
+
+```bash
+source ./venv/bin/activate
+```
+
+and run
+
 ```python
-./garmin.py --username email@domain.com --password password
+python ./src/garmin.py --username email@domain.com --password password
 ```
 
 ## Packages
