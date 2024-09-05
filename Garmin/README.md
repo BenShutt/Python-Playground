@@ -1,4 +1,4 @@
-# Garmin
+# Garmin (WIP)
 
 Fetch and log Garmin activities.
 
