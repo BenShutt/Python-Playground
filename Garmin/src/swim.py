@@ -16,10 +16,12 @@ class Swim(Activity):
         return self.formatted_distance_m(self.distance_m)
         
     def formatted_speed(self):
+        """For swimming, show pace in minutes / 100meters"""
         return self.formatted_pace(self.distance_m, self.duration_s)
         
     def formatted_pace(self, distance_m, duration_s):
         """Formatted pace in minutes / 100meters"""
+        if distance_m <= 0: return "N/A"
         number_of_hundreds = distance_m / 100
         seconds_per_hundred = duration_s / number_of_hundreds
         minutes, seconds = divmod(seconds_per_hundred, 60)
