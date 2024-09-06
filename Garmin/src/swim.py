@@ -22,8 +22,8 @@ class Swim(Activity):
         """Formatted pace in minutes / 100meters"""
         number_of_hundreds = distance_m / 100
         seconds_per_hundred = duration_s / number_of_hundreds
-        min, sec = divmod(seconds_per_hundred, 60)
-        return "%02d:%02d min/100m" % (min, sec)
+        minutes, seconds = divmod(seconds_per_hundred, 60)
+        return "{:02.0f}:{:02.0f} min/100m".format(minutes, seconds)
     
     def formatted_distance_m(self, distance_m):
         """Formatted distance in meters"""

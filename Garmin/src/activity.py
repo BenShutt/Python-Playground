@@ -41,9 +41,9 @@ class Activity:
         return self.__class__.__name__
     
     def formatted_duration(self):
-        min, sec = divmod(self.duration_s, 60)
-        hour, min = divmod(min, 60)
-        return "%02d:%02d:%02d" % (hour, min, sec)
+        minutes, seconds = divmod(self.duration_s, 60)
+        hours, minutes = divmod(minutes, 60)
+        return "{:02.0f}:{:02.0f}:{:02.0f}".format(hours, minutes, seconds)
     
     def formatted_distance(self):
         """Defaults to distance in kilometers"""
