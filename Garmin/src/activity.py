@@ -41,19 +41,19 @@ class Activity:
     def formatted_duration(self):
         min, sec = divmod(self.duration_s, 60)
         hour, min = divmod(min, 60)
-        return '%02d:%02d:%02d' % (hour, min, sec)
+        return "%02d:%02d:%02d" % (hour, min, sec)
     
-    def formatted_distance(self):
+    def formatted_distance_km(self):
         return "{:.2f} km".format(self.distance_m / 1000)
     
-    def download_gpx_to_desktop(self, api):
-        gpx_data = api.download_activity(self.id, dl_fmt=api.ActivityDownloadFormat.GPX)
-        file = f"{str(Path.home())}/Desktop/{self.id}.gpx"
+    def download_tcx_to_desktop(self, api):
+        data = api.download_activity(self.id, dl_fmt=api.ActivityDownloadFormat.TCX)
+        file = f"{str(Path.home())}/Desktop/{self.id}.tcx"
         with open(file, "wb") as writer:
-            writer.write(gpx_data)
+            writer.write(data)
     
     def description(self):
-        return f"{self.formatted_date_time()}, {self.formatted_type()}, {self.formatted_duration()}, {self.formatted_distance()}"
+        return f"{self.formatted_date_time()}, {self.formatted_type()}, {self.formatted_duration()}, {self.formatted_distance_km()}"
     
-    def process(self):
+    def process(self, api):
         print(self.description())

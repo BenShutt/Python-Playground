@@ -43,4 +43,4 @@ if __name__ == "__main__":
     for activity in activities:
         model = ActivityType.activity(activity)
         if model != None:
-            model.process()
+            model.process(api)
