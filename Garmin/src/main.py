@@ -21,7 +21,8 @@ ACTIVITIES_IN_LAST_DAYS = 3
 def init_arguments():
     file_name = os.path.basename(sys.argv[0])
     parser = argparse.ArgumentParser(file_name)
-    parser.add_argument("-t", "--tokens", help="Directory to write OAuth tokens", type=str, required=True)
+    parser.add_argument("--tokens", help="Directory to write OAuth tokens", type=str, required=True)
+    parser.add_argument("--laps", action="store_true", help="Show splits for swimming activities")
     return parser.parse_args()
 
 def fetch_activities(api):
@@ -38,8 +39,7 @@ if __name__ == "__main__":
     args = init_arguments()
     api = init_api(args)
     activities = fetch_activities(api)
-    for i, activity in enumerate(activities):
+    for activity in activities:
         model = ActivityType.activity(activity)
         if model != None:
-            if i > 0: print("") # New line
-            model.process(api)
+            model.process(api, args)

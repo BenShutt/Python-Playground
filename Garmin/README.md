@@ -29,8 +29,11 @@ pip3 install -r ./requirements.txt
 In the active virtual environment, run the python script passing the command-line arguments:
 
 ```bash
-python ./src/main.py --tokens ./garmin_tokens
+python ./src/main.py --tokens ./garmin_tokens --laps
 ```
+
+The `--laps` flag, when provided, shows splits fpr swimming activities.
+The flag may be omitted, in which case it would default to `False`.
 
 ### Deactivate Virtual Environment
 

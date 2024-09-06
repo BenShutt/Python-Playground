@@ -17,9 +17,10 @@ class Swim(Activity):
         """Override, formatting pace in minutes per hundred meters (min/100m)"""
         return self.formatter.minutes_per_hundred_meters()
 
-    def process(self, api):
-        super().process(api)
-        
+    def process(self, api, args):
+        super().process(api, args)
+
+        if not args.laps: return
         splits = api.get_activity_splits(self.id)
         laps = splits["lapDTOs"]
         for dict in laps:

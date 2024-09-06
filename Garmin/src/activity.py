@@ -73,5 +73,5 @@ class Activity:
             f", {self.formatted_speed()}"
         )  
 
-    def process(self, api):
+    def process(self, api, args):
         print(self.description())
