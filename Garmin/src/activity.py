@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import datetime
+from pathlib import Path
 
 # Garmin GMT date format
 GARMIN_GMT_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
@@ -12,6 +13,7 @@ class Activity:
     """Parent class for Garmin activity models"""
 
     def __init__(self, dict):
+        self.id = dict["activityId"]
         self.start_time_gmt = dict["startTimeGMT"] # String
         self.duration_s = dict["movingDuration"] # Double
         self.distance_m = dict["distance"] # Double
@@ -43,6 +45,12 @@ class Activity:
     
     def formatted_distance(self):
         return "{:.2f} km".format(self.distance_m / 1000)
+    
+    def download_gpx_to_desktop(self, api):
+        gpx_data = api.download_activity(self.id, dl_fmt=api.ActivityDownloadFormat.GPX)
+        file = f"{str(Path.home())}/Desktop/{self.id}.gpx"
+        with open(file, "wb") as writer:
+            writer.write(gpx_data)
     
     def description(self):
         return f"{self.formatted_date_time()}, {self.formatted_type()}, {self.formatted_duration()}, {self.formatted_distance()}"
