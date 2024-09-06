@@ -2,6 +2,7 @@
 
 import datetime
 from pathlib import Path
+from formatter import Formatter
 
 # Garmin GMT date format
 GARMIN_GMT_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
@@ -15,8 +16,9 @@ class Activity:
     def __init__(self, dict):
         self.id = dict["activityId"]
         self.start_time_gmt = dict["startTimeGMT"] # String
-        self.duration_s = dict["movingDuration"] # Double
         self.distance_m = dict["distance"] # Double
+        self.duration_s = dict["movingDuration"] # Double
+        self.formatter = Formatter(self.distance_m, self.duration_s)
         
     # ==================== Formatting ====================
 
@@ -38,23 +40,20 @@ class Activity:
         return instant.strftime(DATE_FORMAT)
     
     def formatted_type(self):
+        """Defaults to the class name"""
         return self.__class__.__name__
     
     def formatted_duration(self):
-        minutes, seconds = divmod(self.duration_s, 60)
-        hours, minutes = divmod(minutes, 60)
-        return "{:02.0f}:{:02.0f}:{:02.0f}".format(hours, minutes, seconds)
+        """Defaults to duration in hour, minutes, seconds (HH:MM:SS)"""
+        return self.formatter.duration()
     
     def formatted_distance(self):
-        """Defaults to distance in kilometers"""
-        return "{:.2f}km".format(self.distance_m / 1000)
+        """Defaults to distance in kilometers (km)"""
+        return self.formatter.distance_kilometers()
     
     def formatted_speed(self):
-        """Defaults to speed in kilometers / hour"""
-        distance_km = self.distance_m / 1000
-        hours = self.duration_s / 3600
-        speed = distance_km / hours
-        return "{:.2f} km/h".format(speed)
+        """Defaults to speed in kilometers per hour (km/h)"""
+        return self.formatter.kilometers_per_hour()
     
     # ==================== Other ====================
     

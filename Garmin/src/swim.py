@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from activity import Activity
+from lap import Lap
 
 class Swim(Activity):
     """A swim activity"""
@@ -8,40 +9,21 @@ class Swim(Activity):
     def __init__(self, dict):
         super().__init__(dict)
         
-    def process(self, api):
-        super().process(api)
-        self.print_laps(api)
-        
     def formatted_distance(self):
-        return self.formatted_distance_m(self.distance_m)
+        """Override, formatting distance in meters (m)"""
+        return self.formatter.distance_meters()
         
     def formatted_speed(self):
-        """For swimming, show pace in minutes / 100meters"""
-        return self.formatted_pace(self.distance_m, self.duration_s)
+        """Override, formatting pace in minutes per hundred meters (min/100m)"""
+        return self.formatter.minutes_per_hundred_meters()
+
+    def process(self, api):
+        super().process(api)
         
-    def formatted_pace(self, distance_m, duration_s):
-        """Formatted pace in minutes / 100meters"""
-        if distance_m <= 0: return "N/A"
-        number_of_hundreds = distance_m / 100
-        seconds_per_hundred = duration_s / number_of_hundreds
-        minutes, seconds = divmod(seconds_per_hundred, 60)
-        return "{:02.0f}:{:02.0f} min/100m".format(minutes, seconds)
-    
-    def formatted_distance_m(self, distance_m):
-        """Formatted distance in meters"""
-        return "%dm" % distance_m
-    
-    def print_lap(self, lap):
-        distance_m = lap["distance"]
-        if distance_m <= 0: return # Assume 0 distance is a rest lap
-        duration_s = lap["movingDuration"]
-        formatted_distance = self.formatted_distance_m(distance_m)
-        formatted_pace = self.formatted_pace(distance_m, duration_s)
-        print(f"    {formatted_distance} {formatted_pace}")
-        
-    def print_laps(self, api):
         splits = api.get_activity_splits(self.id)
         laps = splits["lapDTOs"]
-        for lap in laps:
-            self.print_lap(lap)
+        for dict in laps:
+            if not Lap.is_rest(dict):
+                Lap(dict).process()
+        
             

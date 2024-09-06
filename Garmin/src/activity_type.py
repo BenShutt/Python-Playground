@@ -10,10 +10,7 @@ class ActivityType(Enum):
     RUN = 0
     RIDE = 1
     SWIM = 2
-    
-    def title(self):
-        self.name.capitalize()
-        
+
     @classmethod
     def init(cls, activity):
         type_key = activity["activityType"]["typeKey"]
@@ -38,3 +35,6 @@ class ActivityType(Enum):
             return Swim(activity)
         else:
             return None
+        
+    def title(self):
+        self.name.capitalize()
