@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from activity import Activity
-from lap import Lap
+from models.activity import Activity
+from models.lap import Lap
 
 class Swim(Activity):
     """A swim activity"""

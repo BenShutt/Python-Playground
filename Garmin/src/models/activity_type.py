@@ -2,14 +2,16 @@
 
 from enum import Enum 
 
-from run import Run
-from ride import Ride
-from swim import Swim
+from models.run import Run
+from models.ride import Ride
+from models.swim import Swim
+from models.hike import Hike
 
 class ActivityType(Enum):
     RUN = 0
     RIDE = 1
     SWIM = 2
+    HIKE = 3
 
     @classmethod
     def init(cls, activity):
@@ -20,6 +22,8 @@ class ActivityType(Enum):
             return cls.RIDE
         elif type_key == "lap_swimming":
             return cls.SWIM
+        elif type_key == "hiking":
+            return cls.HIKE
         else:
             print(f"Unsupported activity_type {type_key}")
             return None
@@ -33,8 +37,7 @@ class ActivityType(Enum):
             return Ride(activity)
         elif activity_type == ActivityType.SWIM:
             return Swim(activity)
+        elif activity_type == ActivityType.HIKE:
+            return Hike(activity)
         else:
             return None
-        
-    def title(self):
-        self.name.capitalize()

@@ -2,6 +2,7 @@
 
 import datetime
 from pathlib import Path
+
 from formatter import Formatter
 
 # Garmin GMT date format

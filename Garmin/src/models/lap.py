@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from formatter import Formatter
-from swim_stroke import SwimStroke
+from models.swim_stroke import SwimStroke
 
 class Lap:
     @classmethod

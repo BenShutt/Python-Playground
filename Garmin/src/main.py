@@ -9,9 +9,9 @@ import os
 import datetime
 import argparse
 import json
-
 from garmin_api import init_api
-from activity_type import ActivityType
+
+from models.activity_type import ActivityType
 
 # ==================== Functions ====================
 

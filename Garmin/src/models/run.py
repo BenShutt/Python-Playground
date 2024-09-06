@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from activity import Activity
+from models.activity import Activity
 
 class Run(Activity):
     """A run activity"""
