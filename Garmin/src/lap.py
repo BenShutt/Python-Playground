@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from formatter import Formatter
+from swim_stroke import SwimStroke
 
 class Lap:
     @classmethod
@@ -11,11 +12,14 @@ class Lap:
         self.distance_m = dict["distance"]
         self.duration_s = dict["movingDuration"]
         self.formatter = Formatter(self.distance_m, self.duration_s)
+        self.strokes = SwimStroke.comma_separated(dict)
         
     def description(self):
         formatted_distance = self.formatter.distance_meters()
         formatted_pace = self.formatter.minutes_per_hundred_meters()
-        return f"{formatted_distance} @ {formatted_pace}"
+        strokes = self.strokes
+        if strokes: strokes = f" ({strokes})"
+        return f"{formatted_distance} {formatted_pace}{strokes}"
     
     def process(self):
-        print(f"    {self.description()}")
+        print(self.description())

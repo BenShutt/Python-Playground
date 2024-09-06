@@ -38,7 +38,8 @@ if __name__ == "__main__":
     args = init_arguments()
     api = init_api(args)
     activities = fetch_activities(api)
-    for activity in activities:
+    for i, activity in enumerate(activities):
         model = ActivityType.activity(activity)
         if model != None:
+            if i > 0: print("") # New line
             model.process(api)
