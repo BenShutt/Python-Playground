@@ -13,21 +13,19 @@ import json
 from garmin_api import init_api
 from activity_type import ActivityType
 
-# Number of days before now to fetch activities
-ACTIVITIES_IN_LAST_DAYS = 3
-
 # ==================== Functions ====================
 
 def init_arguments():
     file_name = os.path.basename(sys.argv[0])
     parser = argparse.ArgumentParser(file_name)
-    parser.add_argument("--tokens", help="Directory to write OAuth tokens", type=str, required=True)
+    parser.add_argument("--tokens", help="Directory to store OAuth tokens", type=str, required=True)
+    parser.add_argument("--days", help="Days before now to fetch activities", type=int, required=True)
     parser.add_argument("--laps", action="store_true", help="Show splits for swimming activities")
     return parser.parse_args()
 
-def fetch_activities(api):
+def fetch_activities(args, api):
     end_date = datetime.datetime.now()
-    start_date = end_date - datetime.timedelta(ACTIVITIES_IN_LAST_DAYS)
+    start_date = end_date - datetime.timedelta(args.days)
     return api.get_activities_by_date(start_date.isoformat(), end_date.isoformat())
 
 def print_json(dict):
@@ -38,7 +36,7 @@ def print_json(dict):
 if __name__ == "__main__":
     args = init_arguments()
     api = init_api(args)
-    activities = fetch_activities(api)
+    activities = fetch_activities(args, api)
     for activity in activities:
         model = ActivityType.activity(activity)
         if model != None:

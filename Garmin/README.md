@@ -29,11 +29,14 @@ pip3 install -r ./requirements.txt
 In the active virtual environment, run the python script passing the command-line arguments:
 
 ```bash
-python ./src/main.py --tokens ./garmin_tokens --laps
+python ./src/main.py --tokens ./garmin_tokens --days 3 --laps
 ```
 
-The `--laps` flag, when provided, shows splits fpr swimming activities.
-The flag may be omitted, in which case it would default to `False`.
+#### Arguments
+
+- `--tokens` [Option, Required] Directory to store OAuth tokens
+- `--days` [Option, Required] Days before now to fetch activities
+- `--laps` [Flag, Optional] Show splits for swimming activities. True when provided and false when omitted
 
 ### Deactivate Virtual Environment
 
