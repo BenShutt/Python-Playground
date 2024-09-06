@@ -6,4 +6,4 @@ class Swim(Activity):
     """A swim activity"""
     
     def __init__(self, dict):
-        Activity.__init__(self, dict)
+        super().__init__(dict)
