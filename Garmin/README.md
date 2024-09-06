@@ -29,7 +29,7 @@ pip3 install -r ./requirements.txt
 In an active virtual environment, run the python script passing the command-line arguments:
 
 ```bash
-python ./src/main.py --username email@domain.com --password password --tokens ./garmin-tokens
+python ./src/main.py --username email@domain.com --password password --tokens ./garmin_tokens
 ```
 
 ### Deactivate Virtual Environment

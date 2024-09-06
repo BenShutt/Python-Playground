@@ -8,6 +8,7 @@ import sys
 import os
 import datetime
 import argparse
+import json
 
 from garmin_api import init_api
 from activity_type import ActivityType
@@ -30,6 +31,9 @@ def fetch_activities(args):
     end_date = datetime.datetime.now()
     start_date = end_date - datetime.timedelta(ACTIVITIES_IN_LAST_DAYS)
     return api.get_activities_by_date(start_date.isoformat(), end_date.isoformat())
+
+def print_json(activity):
+    print(json.dumps(activity, indent=4))
 
 # ==================== Main ====================
 

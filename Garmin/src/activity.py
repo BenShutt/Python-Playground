@@ -13,7 +13,8 @@ class Activity:
 
     def __init__(self, dict):
         self.start_time_gmt = dict["startTimeGMT"] # String
-        self.duration = dict["duration"] # Double
+        self.duration_s = dict["movingDuration"] # Double
+        self.distance_m = dict["distance"] # Double
 
     def formatted_date_time(self):
         """Map a formatted Garmin date string to a localized formatted date string"""
@@ -36,7 +37,12 @@ class Activity:
         return self.__class__.__name__
     
     def formatted_duration(self):
-        return "{:0>8}".format(str(datetime.timedelta(seconds=self.duration)))
+        min, sec = divmod(self.duration_s, 60)
+        hour, min = divmod(min, 60)
+        return '%02d:%02d:%02d' % (hour, min, sec)
+    
+    def formatted_distance(self):
+        return "{:.2f} km".format(self.distance_m / 1000)
     
     def description(self):
-        return f"{self.formatted_date_time()}, {self.formatted_type()}, {self.formatted_duration()}"
+        return f"{self.formatted_date_time()}, {self.formatted_type()}, {self.formatted_duration()}, {self.formatted_distance()}"
