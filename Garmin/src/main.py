@@ -31,8 +31,8 @@ def fetch_activities(api):
     start_date = end_date - datetime.timedelta(ACTIVITIES_IN_LAST_DAYS)
     return api.get_activities_by_date(start_date.isoformat(), end_date.isoformat())
 
-def print_json(activity):
-    print(json.dumps(activity, indent=4))
+def print_json(dict):
+    print(json.dumps(dict, indent=4))
 
 # ==================== Main ====================
 
@@ -43,4 +43,4 @@ if __name__ == "__main__":
     for activity in activities:
         model = ActivityType.activity(activity)
         if model != None:
-            print(model.description())
+            model.process()

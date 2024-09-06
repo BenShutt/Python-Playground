@@ -54,3 +54,6 @@ class Activity:
     
     def description(self):
         return f"{self.formatted_date_time()}, {self.formatted_type()}, {self.formatted_duration()}, {self.formatted_distance()}"
+    
+    def process(self):
+        print(self.description())
