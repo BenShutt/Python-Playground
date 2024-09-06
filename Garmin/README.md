@@ -18,7 +18,7 @@ Activate the virtual environment:
 source ./venv/bin/activate
 ```
 
-Install dependencies:
+In the active virtual environment, install dependencies:
 
 ```bash
 pip3 install -r ./requirements.txt
@@ -26,7 +26,7 @@ pip3 install -r ./requirements.txt
 
 ### Run
 
-In an active virtual environment, run the python script passing the command-line arguments:
+In the active virtual environment, run the python script passing the command-line arguments:
 
 ```bash
 python ./src/main.py --tokens ./garmin_tokens
