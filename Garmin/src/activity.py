@@ -17,6 +17,8 @@ class Activity:
         self.start_time_gmt = dict["startTimeGMT"] # String
         self.duration_s = dict["movingDuration"] # Double
         self.distance_m = dict["distance"] # Double
+        
+    # ==================== Formatting ====================
 
     def formatted_date_time(self):
         """Map a formatted Garmin date string to a localized formatted date string"""
@@ -43,17 +45,34 @@ class Activity:
         hour, min = divmod(min, 60)
         return "%02d:%02d:%02d" % (hour, min, sec)
     
-    def formatted_distance_km(self):
+    def formatted_distance(self):
+        """Defaults to distance in kilometers"""
         return "{:.2f} km".format(self.distance_m / 1000)
     
-    def download_tcx_to_desktop(self, api):
+    def formatted_speed(self):
+        """Defaults to speed in kilometers / hour"""
+        distance_km = self.distance_m / 1000
+        hours = self.duration_s / 3600
+        speed = distance_km / hours
+        return "{:.2f} km/h".format(speed)
+    
+    # ==================== Other ====================
+    
+    def download_tcx(self, api):
         data = api.download_activity(self.id, dl_fmt=api.ActivityDownloadFormat.TCX)
-        file = f"{str(Path.home())}/Desktop/{self.id}.tcx"
+        file = f"{str(Path.home())}/Downloads/{self.id}.tcx"
         with open(file, "wb") as writer:
             writer.write(data)
+        print(f"TCX written to {file}")
     
     def description(self):
-        return f"{self.formatted_date_time()}, {self.formatted_type()}, {self.formatted_duration()}, {self.formatted_distance_km()}"
-    
+        return (
+            f"{self.formatted_date_time()}"
+            f", {self.formatted_type()}"
+            f", {self.formatted_duration()}"
+            f", {self.formatted_distance()}"
+            f", {self.formatted_speed()}"
+        )  
+
     def process(self, api):
         print(self.description())
