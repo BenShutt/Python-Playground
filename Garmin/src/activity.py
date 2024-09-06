@@ -47,7 +47,7 @@ class Activity:
     
     def formatted_distance(self):
         """Defaults to distance in kilometers"""
-        return "{:.2f} km".format(self.distance_m / 1000)
+        return "{:.2f}km".format(self.distance_m / 1000)
     
     def formatted_speed(self):
         """Defaults to speed in kilometers / hour"""

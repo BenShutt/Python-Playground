@@ -27,7 +27,7 @@ class Swim(Activity):
     
     def formatted_distance_m(self, distance_m):
         """Formatted distance in meters"""
-        return "%d m" % distance_m
+        return "%dm" % distance_m
     
     def print_lap(self, lap):
         distance_m = lap["distance"]
