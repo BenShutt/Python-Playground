@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from getpass import getpass
 from garth.exc import GarthHTTPError
 from garminconnect import (
     Garmin,
@@ -7,8 +8,14 @@ from garminconnect import (
 )
 
 def get_mfa():
-    """Get MFA."""
+    """Get MFA"""
     return input("MFA one-time code: ")
+
+def get_credentials():
+    """Get user credentials"""
+    email = input("Garmin Connect email: ")
+    password = getpass("Garmin Connect password: ")
+    return email, password
 
 def init_api(args):
     token_store = args.tokens
@@ -17,9 +24,10 @@ def init_api(args):
         garmin.login(token_store)
         return garmin
     except (FileNotFoundError, GarthHTTPError, GarminConnectAuthenticationError):
-        print("OAuth tokens not found, logging in...")
-        garmin = Garmin(email=args.username, password=args.password, is_cn=False, prompt_mfa=get_mfa)
+        print("OAuth tokens not found, please log in")
+        email, password = get_credentials()
+        garmin = Garmin(email=email, password=password, is_cn=False, prompt_mfa=get_mfa)
         garmin.login()
         garmin.garth.dump(token_store)
-        print(f"OAuth tokens stored in '{token_store}' directory for future use")
+        print(f"OAuth tokens stored in the {token_store} directory for future use")
         return garmin

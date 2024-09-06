@@ -21,8 +21,6 @@ ACTIVITIES_IN_LAST_DAYS = 3
 def init_arguments():
     file_name = os.path.basename(sys.argv[0])
     parser = argparse.ArgumentParser(file_name)
-    parser.add_argument("-u", "--username", help="Garmin Connect username", type=str, required=True)
-    parser.add_argument("-p", "--password", help="Garmin Connect password", type=str, required=True)
     parser.add_argument("-t", "--tokens", help="Directory to write OAuth tokens", type=str, required=True)
     return parser.parse_args()
 
