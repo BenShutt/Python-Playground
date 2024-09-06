@@ -163,4 +163,4 @@ cython_debug/
 
 # Project
 .DS_Store
-garmin-tokens
+garmin_tokens
