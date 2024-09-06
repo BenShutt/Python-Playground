@@ -35,6 +35,7 @@ python ./src/main.py --tokens ./garmin_tokens --days 3 --laps
 #### Arguments
 
 - `--tokens` [Option, Required] Directory to store OAuth tokens
+- `--json` [Flag, Optional] Print activities as JSON
 - `--days` [Option, Required] Days before now to fetch activities
 - `--laps` [Flag, Optional] Show splits for swimming activities. True when provided and false when omitted
 

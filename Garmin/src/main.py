@@ -19,6 +19,7 @@ def init_arguments():
     file_name = os.path.basename(sys.argv[0])
     parser = argparse.ArgumentParser(file_name)
     parser.add_argument("--tokens", help="Directory to store OAuth tokens", type=str, required=True)
+    parser.add_argument("--json", action="store_true", help="Print activities as JSON")
     parser.add_argument("--days", help="Days before now to fetch activities", type=int, required=True)
     parser.add_argument("--laps", action="store_true", help="Show splits for swimming activities")
     return parser.parse_args()
@@ -38,6 +39,9 @@ if __name__ == "__main__":
     api = init_api(args)
     activities = fetch_activities(args, api)
     for activity in activities:
+        if args.json:
+            print_json(activity)
+
         model = ActivityType.activity(activity)
         if model != None:
             model.process(api, args)
