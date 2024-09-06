@@ -33,8 +33,7 @@ class Swim(Activity):
     
     def print_lap(self, lap):
         distance_m = lap["distance"]
-        if distance_m <= 0:
-            return # Assume 0 distance is a rest lap
+        if distance_m <= 0: return # Assume 0 distance is a rest lap
         duration_s = lap["movingDuration"]
         formatted_distance = self.formatted_distance_m(distance_m)
         formatted_pace = self.formatted_pace(distance_m, duration_s)
