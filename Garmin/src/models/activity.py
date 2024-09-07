@@ -25,20 +25,24 @@ class Activity:
 
     def formatted_date_time(self):
         """Map a formatted Garmin date string to a localized formatted date string"""
-
-        # Get the user's time zone
-        local_time_zone_id = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo 
-
+        
         # Get the UTC time zone
         utc_time_zone_id = datetime.timezone.utc
 
+        # Get the user's time zone
+        local_time_zone_id = datetime.datetime.now(utc_time_zone_id).astimezone().tzinfo 
+
         # Parse the GMT formatted date string
         instant = datetime.datetime.strptime(self.start_time_gmt, GARMIN_GMT_DATE_FORMAT)
-        instant = instant.replace(tzinfo=utc_time_zone_id)
+        instant = instant.replace(tzinfo=utc_time_zone_id) # Explicitly set UTC
+        
+        # Check if the date is the same dd/MM/yyyy as today
+        is_today = instant.date() == datetime.datetime.today().date()
+        today_str = "[TODAY] " if is_today else ""
     
         # Format in local time
         instant = instant.astimezone(local_time_zone_id)
-        return instant.strftime(DATE_FORMAT)
+        return f"{today_str}{instant.strftime(DATE_FORMAT)}"
     
     def formatted_type(self):
         """Defaults to the class name"""
