@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 """
-Downloads Mochi images, converts `.webp` to `.png`, and crops
+Downloads Mochi images, converts `.webp` to `.png`, and crops.
+With thanks to Little Moons.
 """
 
 import requests
@@ -72,7 +73,6 @@ def main():
     init_directory()
     download_images()
     process()
-
     print(f"Images written to '{DIRECTORY}'")
 
 if __name__ == "__main__":
