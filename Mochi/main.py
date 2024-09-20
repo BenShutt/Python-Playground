@@ -73,7 +73,7 @@ def process():
                 path = convert_to_png(entry)
             
             if path.endswith(".png"):
-                command = f"magick {path} -crop 750x500+325+550 {path}"
+                command = f"magick {path} -crop 730x530+330+580 {path}"
                 run_command(command)
 
 # Execute the steps generating the images
