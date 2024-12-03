@@ -22,4 +22,7 @@ source "${VENV_DIR}/bin/activate"
 trap deactivate EXIT
 
 # Run the script
-python "${SCRIPT_DIR}/src/main.py" --tokens "${SCRIPT_DIR}/garmin_tokens" --days 3 --laps
+python "${SCRIPT_DIR}/src/main.py" \
+    --tokens "${SCRIPT_DIR}/garmin_tokens" \
+    --days 3 \
+    --laps
