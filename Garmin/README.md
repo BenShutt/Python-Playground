@@ -29,7 +29,7 @@ pip3 install -r ./requirements.txt
 In the active virtual environment, run the python script passing the command-line arguments:
 
 ```bash
-python ./src/main.py --tokens ./garmin_tokens --days 3 --laps
+python3 ./src/main.py --tokens ./garmin_tokens --days 3 --laps
 ```
 
 #### Arguments
