@@ -19,10 +19,10 @@ class SwimStroke(Enum):
     def comma_separated(cls, lap):
         strokes = [] # Ordered list of unique strokes
         
-        dtos = lap["lengthDTOs"]
+        dtos = lap.get("lengthDTOs", [])
         for dto in dtos:
-            key = dto["swimStroke"]
-            stroke = SwimStroke[key]
+            key = dto.get("swimStroke", None)
+            stroke = SwimStroke[key] if key != None else None
             if stroke != None and stroke not in strokes:
                 strokes.append(stroke)
 
