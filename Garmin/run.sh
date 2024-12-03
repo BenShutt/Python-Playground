@@ -11,15 +11,15 @@ VENV_DIR="${SCRIPT_DIR}/venv"
 
 # Check venv is set up
 if [[ ! -d "${VENV_DIR}" ]]; then
-    echo "Please ensure ${VENV_DIR} is set up" 1>&2
+    echo "Please set up ${VENV_DIR} before running" 1>&2
     exit 1
 fi
 
 # Activate the venv
 source "${VENV_DIR}/bin/activate"
 
+# Deactivate the venv on exit
+trap deactivate EXIT
+
 # Run the script
 python "${SCRIPT_DIR}/src/main.py" --tokens "${SCRIPT_DIR}/garmin_tokens" --days 3 --laps
-
-# Deactivate the venv
-deactivate
